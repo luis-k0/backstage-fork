@@ -121,10 +121,57 @@ import {
   createExtensionTree,
   ExtensionTree,
 } from '@backstage/frontend-app-api';
+import {
+  createUnifiedTheme,
+  palettes,
+  UnifiedThemeProvider,
+} from '@backstage/theme';
+import DarkIcon from '@material-ui/icons/Brightness2';
+
+const darkTheme = createUnifiedTheme({
+  palette: {
+    ...palettes.dark,
+    // primary: {
+    //   main: '#389b3c',
+    // },
+    // success: {
+    //   main: "#cea000",
+    // },
+  },
+});
+
+const lightTheme = createUnifiedTheme({
+  palette: {
+    ...palettes.light,
+    // primary: {
+    //   main: '#389b3c',
+    // },
+  },
+});
 
 const app = createApp({
   apis,
   plugins: Object.values(plugins),
+  themes: [
+    {
+      id: 'dark-theme',
+      title: 'My Dark Theme',
+      variant: 'dark',
+      icon: <DarkIcon />,
+      Provider: ({ children }) => (
+        <UnifiedThemeProvider theme={darkTheme} children={children} />
+      ),
+    },
+    {
+      id: 'light-theme',
+      title: 'My Light Theme',
+      variant: 'light',
+      icon: <DarkIcon />,
+      Provider: ({ children }) => (
+        <UnifiedThemeProvider theme={lightTheme} children={children} />
+      ),
+    },
+  ],
   icons: {
     // Custom icon example
     alert: AlarmIcon,
