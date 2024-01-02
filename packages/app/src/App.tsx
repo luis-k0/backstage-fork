@@ -122,9 +122,82 @@ import {
   ExtensionTree,
 } from '@backstage/frontend-app-api';
 
+import {
+  createUnifiedTheme,
+  palettes,
+  UnifiedThemeProvider,
+} from '@backstage/theme';
+import DarkIcon from '@material-ui/icons/Brightness2';
+
+const darkTheme = createUnifiedTheme({
+  palette: {
+    ...palettes.dark,
+    mdCustomColor: {
+      codeFgColor: '#f77102',
+      codeBgColor: '#2d383b',
+      codeHlColor: '#edede4',
+      codeHlKeywordColor: '#e809d2',
+      codeHlFunctionColor: '#e83209',
+      codeHlStringColor: '#20e809',
+      codeHlNumberColor: '#e8b009',
+      codeHlConstantColor: '#e80914',
+      codeHlSpecialColor: '#09c7e8',
+      codeHlNameColor: '#e80962',
+      codeHlCommentColor: '#09e88f',
+      codeHlGenericColor: '#e85709',
+      codeHlVariableColor: '#c95bc9',
+      codeHlOperatorColor: '#c95b7a',
+      codeHlPunctuationColor: '#5bb5c9',
+    },
+  },
+});
+
+const lightTheme = createUnifiedTheme({
+  palette: {
+    ...palettes.light,
+    mdCustomColor: {
+      codeFgColor: '#e809d2',
+      codeBgColor: '#edede4',
+      codeHlColor: '#2d383b',
+      codeHlKeywordColor: '#f77102',
+      codeHlFunctionColor: '#e83209',
+      codeHlStringColor: '#20e809',
+      codeHlNumberColor: '#e8b009',
+      codeHlConstantColor: '#e80914',
+      codeHlSpecialColor: '#09c7e8',
+      codeHlNameColor: '#e80962',
+      codeHlCommentColor: '#09e88f',
+      codeHlGenericColor: '#e85709',
+      codeHlVariableColor: '#c95bc9',
+      codeHlOperatorColor: '#c95b7a',
+      codeHlPunctuationColor: '#5bb5c9',
+    },
+  },
+});
+
 const app = createApp({
   apis,
   plugins: Object.values(plugins),
+  themes: [
+    {
+      id: 'dark-theme',
+      title: 'My Dark Theme',
+      variant: 'dark',
+      icon: <DarkIcon />,
+      Provider: ({ children }) => (
+        <UnifiedThemeProvider theme={darkTheme} children={children} />
+      ),
+    },
+    {
+      id: 'light-theme',
+      title: 'My Light Theme',
+      variant: 'light',
+      icon: <DarkIcon />,
+      Provider: ({ children }) => (
+        <UnifiedThemeProvider theme={lightTheme} children={children} />
+      ),
+    },
+  ],
   icons: {
     // Custom icon example
     alert: AlarmIcon,
